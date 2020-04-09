@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Product">
+        <id column="product_id" property="productId" />
+        <result column="product_shop_id" property="productShopId" />
+        <result column="product_type_id" property="productTypeId" />
+        <result column="product_cover" property="productCover" />
+        <result column="product_images" property="productImages" />
+        <result column="product_label" property="productLabel" />
+        <result column="product_name" property="productName" />
+        <result column="product_keyword" property="productKeyword" />
+        <result column="product_coding" property="productCoding" />
+        <result column="product_desc" property="productDesc" />
+        <result column="product_range_price" property="productRangePrice" />
+        <result column="product_old_price" property="productOldPrice" />
+        <result column="product_now_price" property="productNowPrice" />
+        <result column="product_vip_price" property="productVipPrice" />
+        <result column="product_nuan_status" property="productNuanStatus" />
+        <result column="product_nuan_price" property="productNuanPrice" />
+        <result column="product_sales_number" property="productSalesNumber" />
+        <result column="product_inventory" property="productInventory" />
+        <result column="product_use_attr" property="productUseAttr" />
+        <result column="product_attr" property="productAttr" />
+        <result column="product_price_stocks" property="productPriceStocks" />
+        <result column="product_standard_status" property="productStandardStatus" />
+        <result column="product_standard_num" property="productStandardNum" />
+        <result column="product_details" property="productDetails" />
+        <result column="product_putaway_time" property="productPutawayTime" />
+        <result column="product_create_time" property="productCreateTime" />
+        <result column="product_evaluate_number" property="productEvaluateNumber" />
+        <result column="product_push" property="productPush" />
+        <result column="product_status" property="productStatus" />
+        <result column="product_delete_flag" property="productDeleteFlag" />
+        <result column="product_remark" property="productRemark" />
+    </resultMap>
+
+    <resultMap id="productInfo" type="com.example.demo.entity.DTO.ProductDTO" extends="BaseResultMap">
+        <collection property="skuStockList" columnPrefix="sku_" resultMap="com.example.demo.mapper.SkuStockMapper.BaseResultMap"></collection>
+        <collection property="productAttributeValueList" columnPrefix="attribute_" resultMap="com.example.demo.mapper.ProductAttributeValueMapper.BaseResultMap"></collection>
+    </resultMap>
+
+    <!--获取单个商品信息-->
+    <select id="getProductInfo" resultMap="productInfo">
+        SELECT
+            *,
+            s.id sku_id,
+            s.product_id sku_product_id,
+            s.price sku_price,
+            s.low_stock sku_low_stock,
+            s.pic sku_pic,
+            s.sale sku_sale,
+            s.sku_code sku_sku_code,
+            s.stock sku_stock,
+            s.sp_data sku_sp_data,
+            s.promotion_price sku_promotion_price,
+            s.lock_stock sku_lock_stock,
+            a.id attribute_id,
+            a.product_id attribute_product_id,
+            a.product_attribute_id attribute_product_attribute_id,
+            a.value	attribute_value
+        FROM product p
+                 LEFT JOIN sku_stock s ON p.product_id=s.product_id
+                 LEFT JOIN product_attribute_value a ON p.product_id=a.product_id
+        WHERE p.product_id = #{productId}
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ProductAttributeValueMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.ProductAttributeValue">
+        <id column="id" property="id" />
+        <result column="product_id" property="productId" />
+        <result column="product_attribute_id" property="productAttributeId" />
+        <result column="value" property="value" />
+    </resultMap>
+    <insert id="insertList">
+        insert into product_attribute_value (id,product_id,product_attribute_id,value) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=VARCHAR},
+            #{item.productId,jdbcType=VARCHAR},
+            #{item.productAttributeId,jdbcType=VARCHAR},
+            #{item.value,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+</mapper>
