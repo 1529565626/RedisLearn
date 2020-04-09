@@ -2,6 +2,7 @@ package com.demo.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,13 +15,14 @@ import java.math.BigDecimal;
  * @author Zhang@Jowim.com
  * @since 2020-04-09
  */
-public class Order extends Model<Order> {
+public class BuyOrder extends Model<BuyOrder> {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId("id")
     private String id;
     @TableField("product_id")
     private String productId;
+
     private BigDecimal amount;
 
 

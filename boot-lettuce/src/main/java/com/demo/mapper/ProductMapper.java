@@ -17,6 +17,6 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface ProductMapper extends BaseMapper<Product> {
 
-    @Update("UPDATE product SET product_inventory = product_inventory - 1 WHERE product_id = #{productId} AND product_inventory>0")
+    @Update("UPDATE product SET product_inventory = product_inventory-1 WHERE product_id = #{productId} AND product_inventory>0")
     int updateStock(@Param("productId") String productId);
 }

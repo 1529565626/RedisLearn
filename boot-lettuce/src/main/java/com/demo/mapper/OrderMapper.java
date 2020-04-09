@@ -1,7 +1,7 @@
 package com.demo.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.demo.entity.Order;
+import com.demo.entity.BuyOrder;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2020-04-09
  */
 @Mapper
-public interface OrderMapper extends BaseMapper<Order> {
+public interface OrderMapper extends BaseMapper<BuyOrder> {
 
 }

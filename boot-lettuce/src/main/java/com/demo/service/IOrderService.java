@@ -1,7 +1,7 @@
 package com.demo.service;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.demo.entity.Order;
+import com.demo.entity.BuyOrder;
 
 /**
  * <p>
@@ -11,7 +11,7 @@ import com.demo.entity.Order;
  * @author Zhang@Jowim.com
  * @since 2020-04-09
  */
-public interface IOrderService extends IService<Order> {
+public interface IOrderService extends IService<BuyOrder> {
 
     /**
      *
