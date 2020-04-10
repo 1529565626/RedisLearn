@@ -3,7 +3,6 @@ package com.demo.service.impl;
 import com.demo.entity.User;
 import com.demo.service.IUserService;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;

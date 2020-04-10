@@ -33,8 +33,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, BuyOrder> impleme
      */
     @Override
     public void seckill(String productId){
-        String proId = JSONObject.parseObject(productId).getString("productId");
-        Product product = productMapper.selectById(proId);
+
+        Product product = productMapper.selectById(productId);
         if (product.getProductInventory()<=0){
             throw new RuntimeException("商品已售完");
         }
@@ -43,11 +43,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, BuyOrder> impleme
         String orderId = GuidGeneratorUtil.generate();
         BuyOrder order = new BuyOrder();
         order.setId(orderId);
-        order.setProductId(proId);
+        order.setProductId(productId);
         order.setAmount(product.getProductNowPrice());
         baseMapper.insert(order);
 
-        int updatenum = productMapper.updateStock(proId);
+        int updatenum = productMapper.updateStock(productId);
         if (updatenum <= 0 ){
             throw new RuntimeException("订单创建失败");
         }

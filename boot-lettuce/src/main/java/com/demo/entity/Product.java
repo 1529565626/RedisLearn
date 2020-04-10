@@ -3,7 +3,6 @@ package com.demo.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,9 +13,9 @@ import java.math.BigDecimal;
  * </p>
  *
  * @author Zhang@Jowim.com
- * @since 2020-04-09
+ * @since 2019-12-18
  */
-public class Product extends Model<Product> {
+public class Product extends Model<Product> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -91,16 +90,6 @@ public class Product extends Model<Product> {
     @TableField("product_vip_price")
     private BigDecimal productVipPrice;
     /**
-     * 是否使用暖心币兑换 0是 1否
-     */
-    @TableField("product_nuan_status")
-    private String productNuanStatus;
-    /**
-     * 产品暖心币兑换值
-     */
-    @TableField("product_nuan_price")
-    private Long productNuanPrice;
-    /**
      * 产品销售量
      */
     @TableField("product_sales_number")
@@ -156,12 +145,12 @@ public class Product extends Model<Product> {
     @TableField("product_evaluate_number")
     private Long productEvaluateNumber;
     /**
-     * 首页推送  0推送 1不推送
+     * 产品推送状态 0推送 1不推送
      */
     @TableField("product_push")
     private String productPush;
     /**
-     * 产品状态 0上架 1下架(入库)  2送礼仓
+     * 产品状态 0上架 1下架(入库)
      */
     @TableField("product_status")
     private String productStatus;
@@ -171,11 +160,32 @@ public class Product extends Model<Product> {
     @TableField("product_delete_flag")
     private String productDeleteFlag;
     /**
+     *促销类型：0->没有促销使用原价;1->使用促销价；2->使用会员价；
+     */
+    @TableField("promotion_type")
+    private String promotionType;
+    /**
      * 备用
      */
     @TableField("product_remark")
     private String productRemark;
 
+
+    public String getProductLabel() {
+        return productLabel;
+    }
+
+    public void setProductLabel(String productLabel) {
+        this.productLabel = productLabel;
+    }
+
+    public String getProductPush() {
+        return productPush;
+    }
+
+    public void setProductPush(String productPush) {
+        this.productPush = productPush;
+    }
 
     public String getProductId() {
         return productId;
@@ -215,14 +225,6 @@ public class Product extends Model<Product> {
 
     public void setProductImages(String productImages) {
         this.productImages = productImages;
-    }
-
-    public String getProductLabel() {
-        return productLabel;
-    }
-
-    public void setProductLabel(String productLabel) {
-        this.productLabel = productLabel;
     }
 
     public String getProductName() {
@@ -287,22 +289,6 @@ public class Product extends Model<Product> {
 
     public void setProductVipPrice(BigDecimal productVipPrice) {
         this.productVipPrice = productVipPrice;
-    }
-
-    public String getProductNuanStatus() {
-        return productNuanStatus;
-    }
-
-    public void setProductNuanStatus(String productNuanStatus) {
-        this.productNuanStatus = productNuanStatus;
-    }
-
-    public Long getProductNuanPrice() {
-        return productNuanPrice;
-    }
-
-    public void setProductNuanPrice(Long productNuanPrice) {
-        this.productNuanPrice = productNuanPrice;
     }
 
     public Long getProductSalesNumber() {
@@ -393,14 +379,6 @@ public class Product extends Model<Product> {
         this.productEvaluateNumber = productEvaluateNumber;
     }
 
-    public String getProductPush() {
-        return productPush;
-    }
-
-    public void setProductPush(String productPush) {
-        this.productPush = productPush;
-    }
-
     public String getProductStatus() {
         return productStatus;
     }
@@ -421,6 +399,15 @@ public class Product extends Model<Product> {
         return productRemark;
     }
 
+
+    public String getPromotionType() {
+        return promotionType;
+    }
+
+    public void setPromotionType(String promotionType) {
+        this.promotionType = promotionType;
+    }
+
     public void setProductRemark(String productRemark) {
         this.productRemark = productRemark;
     }
@@ -433,37 +420,40 @@ public class Product extends Model<Product> {
     @Override
     public String toString() {
         return "Product{" +
-        ", productId=" + productId +
-        ", productShopId=" + productShopId +
-        ", productTypeId=" + productTypeId +
-        ", productCover=" + productCover +
-        ", productImages=" + productImages +
-        ", productLabel=" + productLabel +
-        ", productName=" + productName +
-        ", productKeyword=" + productKeyword +
-        ", productCoding=" + productCoding +
-        ", productDesc=" + productDesc +
-        ", productRangePrice=" + productRangePrice +
-        ", productOldPrice=" + productOldPrice +
-        ", productNowPrice=" + productNowPrice +
-        ", productVipPrice=" + productVipPrice +
-        ", productNuanStatus=" + productNuanStatus +
-        ", productNuanPrice=" + productNuanPrice +
-        ", productSalesNumber=" + productSalesNumber +
-        ", productInventory=" + productInventory +
-        ", productUseAttr=" + productUseAttr +
-        ", productAttr=" + productAttr +
-        ", productPriceStocks=" + productPriceStocks +
-        ", productStandardStatus=" + productStandardStatus +
-        ", productStandardNum=" + productStandardNum +
-        ", productDetails=" + productDetails +
-        ", productPutawayTime=" + productPutawayTime +
-        ", productCreateTime=" + productCreateTime +
-        ", productEvaluateNumber=" + productEvaluateNumber +
-        ", productPush=" + productPush +
-        ", productStatus=" + productStatus +
-        ", productDeleteFlag=" + productDeleteFlag +
-        ", productRemark=" + productRemark +
-        "}";
+                "productId='" + productId + '\'' +
+                ", productShopId='" + productShopId + '\'' +
+                ", productTypeId='" + productTypeId + '\'' +
+                ", productCover='" + productCover + '\'' +
+                ", productImages='" + productImages + '\'' +
+                ", productLabel='" + productLabel + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productKeyword='" + productKeyword + '\'' +
+                ", productCoding='" + productCoding + '\'' +
+                ", productDesc='" + productDesc + '\'' +
+                ", productRangePrice='" + productRangePrice + '\'' +
+                ", productOldPrice=" + productOldPrice +
+                ", productNowPrice=" + productNowPrice +
+                ", productVipPrice=" + productVipPrice +
+                ", productSalesNumber=" + productSalesNumber +
+                ", productInventory=" + productInventory +
+                ", productUseAttr='" + productUseAttr + '\'' +
+                ", productAttr='" + productAttr + '\'' +
+                ", productPriceStocks='" + productPriceStocks + '\'' +
+                ", productStandardStatus='" + productStandardStatus + '\'' +
+                ", productStandardNum=" + productStandardNum +
+                ", productDetails='" + productDetails + '\'' +
+                ", productPutawayTime=" + productPutawayTime +
+                ", productCreateTime=" + productCreateTime +
+                ", productEvaluateNumber=" + productEvaluateNumber +
+                ", productPush='" + productPush + '\'' +
+                ", productStatus='" + productStatus + '\'' +
+                ", productDeleteFlag='" + productDeleteFlag + '\'' +
+                ", promotionType='" + promotionType + '\'' +
+                ", productRemark='" + productRemark + '\'' +
+                '}';
+    }
+
+    public static String getRedisKey(){
+        return "RedisDemoProduct";
     }
 }
