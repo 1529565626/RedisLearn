@@ -46,6 +46,8 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
+
+
     /**
      * 商品初始化,将商品放入redis
      */
@@ -61,7 +63,6 @@ public class ProductController {
             Product product1 = (Product) redisTemplate.opsForHash().get(Product.getRedisKey(),product.getProductId());
             System.out.println(product.toString());
         }
-
         log.info("商品加载入内存成功,共"+products.size()+"条,耗时:"+(System.currentTimeMillis()-startTime));
 
     }

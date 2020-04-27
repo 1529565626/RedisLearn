@@ -15,6 +15,16 @@ public class User implements Serializable {
     private String name;
 
     private Integer age;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public static String getUserRedisKey(){
         return "RedisDemo"+"user";
     }

@@ -4,6 +4,7 @@ package com.demo.web;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.entity.Product;
+import com.demo.entity.SkuStock;
 import com.demo.entity.User;
 import com.demo.service.impl.OrderServiceImpl;
 import com.demo.service.impl.ProductServiceImpl;
@@ -52,12 +53,34 @@ public class OrderController {
 
     @PostConstruct
     public void init(){
-        List<Product> products = productService.selectList(new EntityWrapper<Product>().eq("product_delete_flag","0"));
-        for (Product product : products) {
-            redisTemplate.opsForValue().set(Product.getRedisKey()+product.getProductId(),product.getProductInventory()+"");
-        }
+//        List<Product> products = productService.selectList(new EntityWrapper<Product>().eq("product_delete_flag","0"));
+//        for (Product product : products) {
+//            redisTemplate.opsForValue().set(Product.getRedisKey()+product.getProductId(),product.getProductInventory()+"");
+//        }
+        SkuStock skuStock = new SkuStock();
+        skuStock.setId("baoweibei");
+        skuStock.setStock(100L);
+        redisTemplate.opsForHash().put("seckill","sku1",skuStock);
     }
 
+    private int count = 0;
+    @RequestMapping(value = "/seckill2", method = RequestMethod.POST)
+    public ResponseMessage<Object> seckill2(@RequestBody String productId){
+//        修改redis库存
+        SkuStock skuStock = (SkuStock)redisTemplate.opsForHash().get("seckill","sku1");
+        log.info("请求开始商品剩余库存:"+skuStock.getStock());
+        Long stock = skuStock.getStock() - 1;
+        if (stock <= 0){
+            return ResponseMessage.error("库存不足,商品已经售完");
+        }else{
+//            生成订单
+            skuStock.setStock(stock);
+            redisTemplate.opsForHash().put("seckill","sku1",skuStock);
+            log.info("请求结束商品剩余库存:"+skuStock.getStock());
+        }
+        System.out.println("总共请求次数:"+count++);
+        return ResponseMessage.ok("订单创建成功");
+    }
 
     @Autowired
     private OrderServiceImpl orderService;
