@@ -1,0 +1,85 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo?useUnicode=true&characterEncoding=gbk&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong
+    username: root
+    password: Aa@111111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  #初始化DispatcherServlet，为0或正整数就会初始化
+  mvc:
+    throw-exception-if-no-handler-found: true
+    view:
+      prefix: /templates/
+  # 给返回的页面添加后缀名
+      suffix: .html
+  #配置mapper.xml文件所在路径
+  jackson:
+    #    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+  #mybatis-plus.mapper-locations=com/xt/dao/*/*.xml
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  #配置映射类所在的包名
+  type-aliases-package: com.example.demo.entity
+  #修改xml 不重启 调式
+  global-config:
+    mapper-registry-cache: true
+    id-type: 3
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    field-strategy: 2
+    refresh-mapper: true
+  #使用驼峰法映射属性
+  configuration:
+    map-underscore-to-camel-case: true
+#  quartz:
+#    #相关属性配置
+#    properties:
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: DefaultQuartzScheduler
+#            instanceId: AUTO
+#          jobStore:
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#            tablePrefix: QRTZ_
+#            isClustered: false
+#            clusterCheckinInterval: 10000
+#            useProperties: true
+#          threadPool:
+#            class: org.quartz.simpl.SimpleThreadPool
+#            threadCount: 10
+#            threadPriority: 5
+#            threadsInheritContextClassLoaderOfInitializingThread: true
+#          dataSource:
+#            default:
+#              URL: jdbc:mysql://127.0.0.1:3306/spring-boot-demo?useUnicode=true&characterEncoding=gbk&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong
+#              username: root
+#              password: Aa@111111
+#              driver: com.mysql.cj.jdbc.Driver
+#
+#    #数据库方式
+#    job-store-type: jdbc
+    #初始化表结构
+    #jdbc:
+    #initialize-schema: never
