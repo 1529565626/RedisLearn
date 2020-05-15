@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, BuyOrder> implements IOrderService {
 
 
+
     @Resource
     private ProductMapper productMapper;
 

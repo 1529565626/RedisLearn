@@ -37,8 +37,8 @@ import java.util.List;
 @Log
 public class ProductController {
 
-//    @Resource(name="redisTemplate")//k  user hk id hv object
-//    private HashOperations<String  , String, Product> hashTemp;
+    @Resource(name="redisTemplate")//k  user hk id hv object
+    private HashOperations<String  , String, Product> hashTemp;
 
     @Resource
     private RedisTemplate redisTemplate;
@@ -58,6 +58,7 @@ public class ProductController {
         log.info("商品开始加载入库存");
         for (Product product : products) {
             redisTemplate.opsForHash().put(Product.getRedisKey(),product.getProductId(),product);
+            redisTemplate.opsForValue().set(Product.getRedisKey()+product.getProductId(),product.getProductInventory());
         }
         for (Product product : products) {
             Product product1 = (Product) redisTemplate.opsForHash().get(Product.getRedisKey(),product.getProductId());

@@ -31,7 +31,6 @@
         <result column="product_delete_flag" property="productDeleteFlag" />
         <result column="product_remark" property="productRemark" />
         <result column="product_price_stocks" property="productPriceStocks" />
-        <result column="promotion_type" property="promotionType" />
     </resultMap>
 
 

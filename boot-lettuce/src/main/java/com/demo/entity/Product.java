@@ -160,11 +160,6 @@ public class Product extends Model<Product> implements Serializable{
     @TableField("product_delete_flag")
     private String productDeleteFlag;
     /**
-     *促销类型：0->没有促销使用原价;1->使用促销价；2->使用会员价；
-     */
-    @TableField("promotion_type")
-    private String promotionType;
-    /**
      * 备用
      */
     @TableField("product_remark")
@@ -400,13 +395,6 @@ public class Product extends Model<Product> implements Serializable{
     }
 
 
-    public String getPromotionType() {
-        return promotionType;
-    }
-
-    public void setPromotionType(String promotionType) {
-        this.promotionType = promotionType;
-    }
 
     public void setProductRemark(String productRemark) {
         this.productRemark = productRemark;
@@ -448,12 +436,11 @@ public class Product extends Model<Product> implements Serializable{
                 ", productPush='" + productPush + '\'' +
                 ", productStatus='" + productStatus + '\'' +
                 ", productDeleteFlag='" + productDeleteFlag + '\'' +
-                ", promotionType='" + promotionType + '\'' +
                 ", productRemark='" + productRemark + '\'' +
                 '}';
     }
 
     public static String getRedisKey(){
-        return "RedisDemoProduct";
+        return "RedisDemoProduct:";
     }
 }
